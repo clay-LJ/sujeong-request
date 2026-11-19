@@ -1,0 +1,12 @@
+import {chromium} from '@playwright/test';
+import fs from 'node:fs/promises';
+const browser=await chromium.launch();const page=await browser.newPage({viewport:{width:1440,height:1000},acceptDownloads:true});const errors=[];page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')console.log('CONSOLE',m.text().slice(0,200));});
+await page.goto('http://127.0.0.1:5173');
+const fixtures=await page.evaluate(async()=>{const m=await import('/tests/browser-fixture.js');return m.fixtures();});
+await fs.writeFile('public/samples/review-demo.pdf',Buffer.from(fixtures.pdf,'base64'));await fs.writeFile('public/samples/review-demo.png',Buffer.from(fixtures.png,'base64'));
+await page.locator('#file').setInputFiles('public/samples/review-demo.pptx');
+await page.waitForFunction(()=>document.querySelector('#status').textContent.includes('PPTX를 직접')||document.querySelector('#status').classList.contains('error'),{timeout:60000});
+console.log('STATUS',await page.locator('#status').textContent());await page.screenshot({path:'test-results/pptx-initial.png',fullPage:true});
+console.log('IMAGE',await page.locator('#original').evaluate(e=>({w:e.naturalWidth,h:e.naturalHeight,src:e.src.length})));
+console.log('ERRORS',errors);
+await browser.close();
