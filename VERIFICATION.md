@@ -35,7 +35,7 @@ npm test
 BASE_URL=https://clay-lj.github.io/sujeong-request/ npm test
 ```
 
-테스트 입력은 `public/samples/`의 합성 파일입니다. 외부 미디어 차단 시험은 테스트 실행 중 합성 PPTX에 가짜 외부 이미지 관계를 넣어 수행합니다. 외부로 보내는 테스트 API는 없습니다. 테스트 스크린샷·PDF·네트워크 기록은 git에서 제외된 `test-results/`에 저장됩니다.
+테스트 입력은 `tests/fixtures/`의 합성 파일입니다. 외부 미디어 차단 시험은 테스트 실행 중 합성 PPTX에 가짜 외부 이미지 관계를 넣어 수행합니다. 외부로 보내는 테스트 API는 없습니다. 테스트 스크린샷·PDF·네트워크 기록은 git에서 제외된 `test-results/`에 저장됩니다.
 
 로컬 개발 서버에서는 `tests/pdf-inspect.js`를 통해 PDF를 다시 렌더링합니다. 공개 배포 검증은 실제 다운로드와 페이지 수 안내·UI·네트워크를 검사하며, 테스트 보조 모듈은 사이트 빌드에 포함하지 않습니다.
 
